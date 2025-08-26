@@ -12,7 +12,9 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "zod": "^3.25.67"
+    "next-intl": "^4.1.0",
+    "zod": "^3.25.67",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "typescript": "^5"
