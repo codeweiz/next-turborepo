@@ -1,65 +1,34 @@
-import {create} from "zustand/react";
-import {AppConfig, UiThemeMode} from "@microboat/common";
+import { create } from "zustand/react";
+import type { AppConfig } from "../config/app";
 
 // 应用配置状态
 export interface AppConfigState {
-    // 当前语言
-    appConfig: AppConfig;
+	// 当前应用配置
+	appConfig: AppConfig | null;
 
-    // 设置当前语言
-    setAppConfig: (_appConfig: AppConfig) => void;
+	// 初始化配置
+	initConfig: (config: AppConfig) => void;
+
+	// 更新配置
+	updateConfig: (config: Partial<AppConfig>) => void;
 }
 
-// 默认应用配置
-const defaultAppConfig: AppConfig = {
-    i18n: {
-        enabled: true,
-        defaultLocale: 'en',
-        locales: {
-            en: {
-                name: 'English'
-            },
-            zh: {
-                name: '简体中文'
-            }
-        },
-        localeCookieName: 'NEXT_LOCALE'
-    },
-    metadata: {
-        name: 'Microboat',
-        title: 'Microboat',
-        description: 'Microboat',
-        images: {
-            logoLight: "/logo-light.svg",
-            logoDark: "/logo-dark.svg",
-            ogImage: "/og-image.png",
-        },
-        keywords: [
-            "Next.js",
-            "Starter Kit",
-            "Next.js SaaS Template",
-            "Next.js Boilerplate",
-        ]
-    },
-    setting: {
-        account: {
-            canChangeEmail: true,
-        },
-    },
-    ui: {
-        theme: {
-            enabled: true,
-            defaultMode: UiThemeMode.SYSTEM,
-        },
-    }
-}
+// 应用配置状态管理
+export const useAppConfigStore = create<AppConfigState>((set, get) => ({
+	appConfig: null,
 
-// 使用语言状态
-export const useAppConfigStore = create<AppConfigState>((set) => (
-    {
-        appConfig: defaultAppConfig,
-        setAppConfig: (_appConfig) => set(() => ({
-            appConfig: _appConfig
-        })),
-    }
-));
+	initConfig: (config) =>
+		set(() => ({
+			appConfig: config,
+		})),
+
+	updateConfig: (partialConfig) =>
+		set(() => {
+			const currentConfig = get().appConfig;
+			if (!currentConfig) return { appConfig: null };
+
+			return {
+				appConfig: { ...currentConfig, ...partialConfig },
+			};
+		}),
+}));
