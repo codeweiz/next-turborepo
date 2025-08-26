@@ -21,6 +21,8 @@
       "@microboat/auth/*": ["./packages/auth/src/*"],
       "@microboat/config": ["./packages/config/src"],
       "@microboat/config/*": ["./packages/config/src/*"],
+      "@microboat/common": ["./packages/common/src"],
+      "@microboat/common/*": ["./packages/common/src/*"],
       "@microboat/database": ["./packages/database/src"],
       "@microboat/database/*": ["./packages/database/src/*"],
       "@microboat/i18n": ["./packages/i18n/src"],
